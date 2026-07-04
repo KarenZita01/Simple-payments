@@ -73,24 +73,27 @@ function App() {
     if (!address) return
     try {
       const account = await server.loadAccount(address)
-      console.log('Full Account Response:', account)
+      console.log('--- BALANCE DEBUG START ---')
+      console.log('Account ID:', address)
+      console.log('All Balances:', account.balances)
       
-      // Find the native balance
       const nativeBalanceObj = account.balances.find((b: any) => b.asset_type === 'native')
+      console.log('Native Balance Object:', nativeBalanceObj)
       
-      if (nativeBalanceObj && nativeBalanceObj.balance) {
-        // Stellar balances are returned in stroops (1 XLM = 10,000,000 stroops)
-        const stroops = parseFloat(nativeBalanceObj.balance)
+      if (nativeBalanceObj) {
+        const balanceStr = nativeBalanceObj.balance || '0'
+        const stroops = parseFloat(balanceStr)
         const xlm = (stroops / 10000000).toFixed(2)
-        console.log(`Found ${stroops} stroops, which is ${xlm} XLM`)
+        console.log(`Calculation: ${balanceStr} stroops / 10,000,000 = ${xlm} XLM`)
         setBalance(xlm)
       } else {
-        console.warn('No native balance found in account balances array')
+        console.warn('No native balance found in the array')
         setBalance('0')
       }
+      console.log('--- BALANCE DEBUG END ---')
     } catch (error: any) {
       console.error('Balance fetch error:', error)
-      setStatus({ type: 'error', message: 'Failed to fetch balance. Ensure your account is funded on Testnet.' })
+      setStatus({ type: 'error', message: 'Failed to fetch balance. Your account might not be activated.' })
     }
   }
 
