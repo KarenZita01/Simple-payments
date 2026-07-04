@@ -11,7 +11,7 @@ function App() {
   const [status, setStatus] = useState<{ type: 'success' | 'error' | 'info'; message: string } | null>(null)
   const [txHash, setTxHash] = useState<string | null>(null)
 
-  const server = new StellarSdk.Horizon.Server('https://testnet.stellar.org')
+  const server = new StellarSdk.Horizon.Server('https://horizon-testnet.stellar.org')
 
   useEffect(() => {
     if (address) {
