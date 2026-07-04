@@ -22,25 +22,36 @@ function App() {
   async function connectWallet() {
     try {
       setStatus({ type: 'info', message: 'Connecting to Freighter...' })
-      const response = await Freighter.getAddress()
-      console.log('Freighter response:', response)
       
-      let addressValue = null
-      if (typeof response === 'string') {
-        addressValue = response
-      } else if (response && response.address) {
-        addressValue = response.address
+      let address = null
+      
+      // Method 1: Try the official API
+      try {
+        const res = await Freighter.getAddress()
+        address = typeof res === 'string' ? res : res?.address
+      } catch (e) {
+        console.warn('API getAddress failed, trying window object fallback')
       }
 
-      if (addressValue) {
-        setAddress(addressValue)
+      // Method 2: Try window.freighter directly (bypass library)
+      if (!address && (window as any).freighter) {
+        try {
+          const res = await (window as any).freighter.getAddress()
+          address = typeof res === 'string' ? res : res?.address
+        } catch (e) {
+          console.warn('window.freighter.getAddress failed')
+        }
+      }
+
+      if (address) {
+        setAddress(address)
         setStatus({ type: 'success', message: 'Wallet connected!' })
       } else {
-        setStatus({ type: 'error', message: 'Wallet connected, but no address was found.' })
+        setStatus({ type: 'error', message: 'Freighter is installed but returned no address. Please make sure you are logged into the extension.' })
       }
     } catch (error: any) {
-      console.error('Connection error:', error)
-      setStatus({ type: 'error', message: error.message || 'Failed to connect wallet' })
+      console.error('Critical connection error:', error)
+      setStatus({ type: 'error', message: 'Connection error: ' + (error.message || 'Unknown error') })
     }
   }
 
