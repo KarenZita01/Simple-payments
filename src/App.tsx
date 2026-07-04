@@ -131,6 +131,7 @@ function App() {
       ) : (
         <div className="main-content">
           <div className="wallet-info">
+            <p><strong>Network:</strong> Testnet</p>
             <p><strong>Address:</strong> {address}</p>
             <p><strong>Balance:</strong> {balance} XLM</p>
             <button onClick={disconnectWallet} className="btn-secondary">Disconnect</button>
