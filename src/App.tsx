@@ -22,9 +22,13 @@ function App() {
   async function connectWallet() {
     try {
       setStatus({ type: 'info', message: 'Connecting to Freighter...' })
-      const { address: freighterAddress } = await Freighter.getAddress()
-      setAddress(freighterAddress)
-      setStatus({ type: 'success', message: 'Wallet connected!' })
+      const response = await Freighter.getAddress()
+      if (response && response.address) {
+        setAddress(response.address)
+        setStatus({ type: 'success', message: 'Wallet connected!' })
+      } else {
+        setStatus({ type: 'error', message: 'Wallet connected, but no address was found.' })
+      }
     } catch (error: any) {
       console.error(error)
       setStatus({ type: 'error', message: error.message || 'Failed to connect wallet' })
