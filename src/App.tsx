@@ -123,23 +123,23 @@ function App() {
             </div>
             <button onClick={sendXLM} className="btn-primary">Send Funds</button>
           </div>
+        </div>
+      )}
 
-          {status && (
-            <div className={`status-message ${status.type}`}>
-              {status.message}
-            </div>
-          )}
+      {status && (
+        <div className={`status-message ${status.type}`}>
+          {status.message}
+        </div>
+      )}
 
-          {txHash && (
-            <div className="tx-hash">
-              <p><strong>Transaction Hash:</strong></p>
-              <code>{txHash}</code>
-              <br />
-              <a href={`https://testnet.stellar.expert/tx/${txHash}`} target="_blank" rel="noreferrer">
-                View on StellarExpert
-              </a>
-            </div>
-          )}
+      {txHash && (
+        <div className="tx-hash">
+          <p><strong>Transaction Hash:</strong></p>
+          <code>{txHash}</code>
+          <br />
+          <a href={`https://testnet.stellar.expert/tx/${txHash}`} target="_blank" rel="noreferrer">
+            View on StellarExpert
+          </a>
         </div>
       )}
     </div>
