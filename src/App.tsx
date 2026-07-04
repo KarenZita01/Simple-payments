@@ -73,11 +73,15 @@ function App() {
     if (!address) return
     try {
       const account = await server.loadAccount(address)
-      const balanceValue = account.balances.find((b: any) => b.asset_type === 'native')?.balance || '0'
+      console.log('Account data:', account)
+      
+      const nativeBalance = account.balances.find((b: any) => b.asset_type === 'native')
+      const balanceValue = nativeBalance ? nativeBalance.balance : '0'
+      
       setBalance(balanceValue)
     } catch (error: any) {
-      console.error(error)
-      setStatus({ type: 'error', message: 'Failed to fetch balance' })
+      console.error('Balance fetch error:', error)
+      setStatus({ type: 'error', message: 'Failed to fetch balance. Your account might not be activated on the testnet.' })
     }
   }
 
