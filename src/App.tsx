@@ -106,6 +106,12 @@ function App() {
     try {
       setStatus({ type: 'info', message: 'Preparing transaction...' })
       
+      const amountInStroops = (parseFloat(amount) * 10000000).toString();
+      if (isNaN(parseFloat(amountInStroops))) {
+        setStatus({ type: 'error', message: 'Invalid amount' });
+        return;
+      }
+
       const sourceAccount = await server.loadAccount(address)
       const transaction = new StellarSdk.TransactionBuilder(sourceAccount, {
         fee: StellarSdk.BASE_FEE,
@@ -113,7 +119,7 @@ function App() {
         .addOperation(StellarSdk.Operation.payment({
           destination: destination,
           asset: StellarSdk.Asset.native(),
-          amount: amount,
+          amount: amountInStroops,
         }))
         .setTimeout(30)
         .build()

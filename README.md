@@ -22,7 +22,7 @@ This is a simple Stellar dApp built for the White Belt challenge. It allows user
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone <your-repo-url>
+    git clone https://github.com/KarenZita01/Simple-payments.git
    cd stellar-white-belt
    ```
 
@@ -39,8 +39,7 @@ This is a simple Stellar dApp built for the White Belt challenge. It allows user
 4. Open the application in your browser (usually at `http://localhost:5173`).
 
 ## Screenshots
-*(Note: Please add your actual screenshots here after deploying)*
-- Wallet Connected State
-- Balance Displayed
-- Successful Testnet Transaction
-- Transaction Result/Hash
+![Wallet Connected State](public/screenshots/Wallet%20connected%20state.png.png)
+![Balance Displayed](public/screenshots/Balance%20displayed.png.png)
+![Successful Testnet Transaction](public/screenshots/Successful%20testnet%20transaction.png.png)
+![Transaction Result](public/screenshots/Transaction%20result.png.png)
